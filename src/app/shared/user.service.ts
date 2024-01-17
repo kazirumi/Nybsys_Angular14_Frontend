@@ -7,13 +7,14 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import {environment}  from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
   constructor(private fb: FormBuilder, private http: HttpClient) {}
-  readonly rootURL = 'https://localhost:44358/api';
+  // readonly rootURL = 'https://localhost:44358/api';
 
   UserList: User[];
 
@@ -31,7 +32,7 @@ export class UserService {
   });
 
   getAllUser() {
-    return this.http.get(this.rootURL + '/User').subscribe(
+    return this.http.get(environment.rootURL + '/User').subscribe(
       (res: any) => {
         this.UserList = res as User[];
         console.log(this.UserList);
@@ -43,7 +44,7 @@ export class UserService {
   }
 
   deleteUser(Id: string) {
-    return this.http.delete(this.rootURL + '/User/' + Id);
+    return this.http.delete(environment.rootURL + '/User/' + Id);
   }
 
   editUser() {
@@ -52,6 +53,6 @@ export class UserService {
       Email:this.userModel.value.Email,
       FullName:this.userModel.value.FullName
     }
-    return this.http.put(this.rootURL + '/User/' + this.userModel.value.Id,body);
+    return this.http.put(environment.rootURL + '/User/' + this.userModel.value.Id,body);
   }
 }
